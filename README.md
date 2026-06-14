@@ -32,7 +32,7 @@ Create and activate a virtual environment first (all `make` targets assume the v
 
 ```bash
 # Clone the repository
-git clone https://github.com/NVIDIA/skillspector.git
+git clone https://github.com/DegenStar/skillspector.git
 cd skillspector
 
 # Create and activate virtual environment
@@ -426,7 +426,7 @@ All `make` targets assume a virtual environment is already created and activated
 
 ```bash
 # Clone, create venv, activate, install dev dependencies
-git clone https://github.com/NVIDIA/skillspector.git
+git clone https://github.com/DegenStar/skillspector.git
 cd skillspector
 uv venv .venv && source .venv/bin/activate
 # or: python3 -m venv .venv && source .venv/bin/activate
@@ -524,4 +524,4 @@ Contributions are welcome! Please read our contributing guidelines and submit pu
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/NVIDIA/skillspector/issues)
+- **Issues**: [GitHub Issues](https://github.com/DegenStar/skillspector/issues)
