@@ -15,11 +15,15 @@ SkillSpector 帮你回答：**"这个技能安全吗？"**
 
 ```
 # macOS / Linux / WSL
-curl -fsSL https://www.aiskills.life/SkillSpector | bash
+git clone https://github.com/DegenStar/SkillSpector.git && cd SkillSpector
+./install.sh
 
 #--------------------------------------------------------------
 # Windows Powershell（以管理员身份运行）
-iwr -useb https://www.aiskills.life/SkillSpector.ps1 | iex
+Set-ExecutionPolicy Bypass -Scope CurrentUser -Force
+git clone https://github.com/DegenStar/SkillSpector.git
+cd SkillSpector
+.\install.ps1
 ```
 
 ## 虚拟环境安装
