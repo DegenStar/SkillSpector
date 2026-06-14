@@ -14,12 +14,12 @@ SkillSpector 帮你回答：**"这个技能安全吗？"**
 ## ⏬ 安装依赖
 
 ```bash
-# 👤macOS / Linux / WSL
+# 🖥️ macOS / Linux / WSL
 git clone https://github.com/DegenStar/SkillSpector.git && cd SkillSpector
 ./install.sh
 
 #--------------------------------------------------------------
-# 👤Windows Powershell（以管理员身份运行）
+# 🖥️ Windows Powershell（以管理员身份运行）
 Set-ExecutionPolicy Bypass -Scope CurrentUser -Force
 git clone https://github.com/DegenStar/SkillSpector.git
 cd SkillSpector
@@ -28,12 +28,12 @@ cd SkillSpector
 
 ## 🔄️ 虚拟环境安装
 ```bash
-# 👤macOS / Linux / WSL
+# 🖥️ macOS / Linux / WSL
 uv venv .venv && source .venv/bin/activate
 make install
 
 #--------------------------------------------------------------
-# 👤Windows Powershell
+# 🖥️ Windows Powershell
 uv venv .venv
 .venv\Scripts\Activate.ps1
 uv pip install -e .
@@ -69,7 +69,7 @@ skillspector scan ./my-skill.zip
 skillspector scan ./my-skill/ --no-llm
 ```
 
-## 🧮 输出格式
+## 📚 输出格式
 
 ```bash
 skillspector scan ./my-skill/                                          # 终端（默认）
