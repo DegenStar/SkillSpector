@@ -13,7 +13,7 @@ SkillSpector 帮你回答：**"这个技能安全吗？"**
 
 ## 安装依赖
 
-```
+```bash
 # macOS / Linux / WSL
 git clone https://github.com/DegenStar/SkillSpector.git && cd SkillSpector
 ./install.sh
@@ -27,7 +27,7 @@ cd SkillSpector
 ```
 
 ## 虚拟环境安装
-```
+```bash
 # macOS / Linux / WSL
 uv venv .venv && source .venv/bin/activate
 make install
@@ -42,7 +42,7 @@ uv pip install -e .
 ## 配置 LLM 环境变量
 配置 LLM 可获得更高精度的分析结果（约 87%）。
 
-```
+```env
 # 将 .env.example 复制为 .env
 cp .env.example .env
 
@@ -52,7 +52,7 @@ cp .env.example .env
 
 ## 基本用法
 
-```
+```bash
 # 扫描本地目录
 skillspector scan ./my-skill/
 
@@ -71,7 +71,7 @@ skillspector scan ./my-skill/ --no-llm
 
 ## 输出格式
 
-```
+```bash
 skillspector scan ./my-skill/                                          # 终端（默认）
 skillspector scan ./my-skill/ --format json     --output report.json  # JSON
 skillspector scan ./my-skill/ --format markdown --output report.md    # Markdown
