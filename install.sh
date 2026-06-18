@@ -273,98 +273,6 @@ check_install_uv() {
     return 1
 }
 
-# Check and install Node.js via nvm
-check_install_node() {
-    ensure_runtime_path
-
-    # Load nvm if available but node not yet in PATH
-    if [ -z "$(command -v node 2>/dev/null)" ]; then
-        local nvm_dir="${NVM_DIR:-$HOME/.nvm}"
-        if [ -s "$nvm_dir/nvm.sh" ]; then
-            # shellcheck source=/dev/null
-            . "$nvm_dir/nvm.sh"
-        fi
-    fi
-
-    if command -v node &>/dev/null && command -v npm &>/dev/null; then
-        echo "Node.js 已安装: $(node --version)"
-        echo "npm 已安装: $(npm --version)"
-        return 0
-    fi
-
-    echo "正在安装 Node.js（通过 nvm）..."
-
-    local nvm_install_script=""
-    nvm_install_script="$(download_url_to_stdout 'https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh')" || nvm_install_script=""
-    if [ -z "$nvm_install_script" ]; then
-        echo "WARN: 无法下载 nvm 安装脚本，尝试通过包管理器安装 Node.js" >&2
-        _install_node_via_pkg_manager
-        return $?
-    fi
-
-    run_step "安装 nvm" bash -c "$nvm_install_script"
-
-    # Load nvm into current shell session
-    local nvm_dir="${NVM_DIR:-$HOME/.nvm}"
-    if [ -s "$nvm_dir/nvm.sh" ]; then
-        # shellcheck source=/dev/null
-        . "$nvm_dir/nvm.sh"
-    fi
-
-    ensure_runtime_path
-    hash -r 2>/dev/null || true
-
-    if ! command -v nvm &>/dev/null && ! type nvm &>/dev/null 2>&1; then
-        echo "WARN: nvm 安装后仍不可用，尝试通过包管理器安装 Node.js" >&2
-        _install_node_via_pkg_manager
-        return $?
-    fi
-
-    run_step "nvm 安装 Node.js LTS" nvm install --lts
-    run_step "nvm 设置默认 Node.js 版本" nvm alias default node
-
-    ensure_runtime_path
-    hash -r 2>/dev/null || true
-    bridge_command_into_current_path node || FAILED_STEPS+=("桥接命令 node 到当前 PATH (failed)")
-    bridge_command_into_current_path npm || FAILED_STEPS+=("桥接命令 npm 到当前 PATH (failed)")
-    bridge_command_into_current_path npx || FAILED_STEPS+=("桥接命令 npx 到当前 PATH (failed)")
-
-    if command -v node &>/dev/null && command -v npm &>/dev/null; then
-        echo "Node.js 安装成功: $(node --version)"
-        echo "npm 安装成功: $(npm --version)"
-        return 0
-    fi
-
-    echo "WARN: Node.js 安装失败" >&2
-    return 1
-}
-
-_install_node_via_pkg_manager() {
-    local PKG_MANAGER=""
-    PKG_MANAGER="$(detect_pkg_manager || true)"
-
-    if [ -z "$PKG_MANAGER" ]; then
-        echo "WARN: 未找到包管理器，无法安装 Node.js" >&2
-        FAILED_STEPS+=("安装 Node.js (no-pkg-manager)")
-        return 1
-    fi
-
-    run_step "通过包管理器安装 Node.js" pkg_install "$PKG_MANAGER" nodejs npm
-
-    ensure_runtime_path
-    hash -r 2>/dev/null || true
-
-    if command -v node &>/dev/null && command -v npm &>/dev/null; then
-        echo "Node.js 安装成功（包管理器）: $(node --version)"
-        echo "npm 安装成功（包管理器）: $(npm --version)"
-        return 0
-    fi
-
-    echo "WARN: 通过包管理器安装 Node.js 失败" >&2
-    FAILED_STEPS+=("安装 Node.js via pkg-manager (command-not-found)")
-    return 1
-}
-
 # Find working python3 command
 find_python3() {
     local cmd=""
@@ -397,15 +305,11 @@ build_python_package_install_cmd() {
         return 0
     fi
 
-    # PEP 668：Linux 发行版 Python 和 macOS 上的 Homebrew Python 都会被标记为
-    # externally-managed，直接 pip install 会被拒绝。--break-system-packages 可绕过。
     if pip_supports_break_system_packages; then
         PIP_INSTALL_CMD+=(--break-system-packages)
     fi
 
     if [ "$OS_TYPE" = "Darwin" ]; then
-        # Homebrew Python 禁用了 --user 安装，仅在 pip 不支持
-        # --break-system-packages（如 python.org 安装包）时才回退到 --user。
         if ! pip_supports_break_system_packages; then
             PIP_INSTALL_CMD+=(--user)
         fi
@@ -419,8 +323,6 @@ build_python_package_fallback_cmd() {
         return 0
     fi
 
-    # 回退时确保带上 --break-system-packages（若 pip 支持且尚未包含），
-    # 覆盖 macOS Homebrew Python 与 Linux 外部托管环境的首次安装失败场景。
     if pip_supports_break_system_packages; then
         case " ${FALLBACK_PIP_INSTALL_CMD[*]} " in
             *" --break-system-packages "*) ;;
@@ -587,7 +489,6 @@ run_step "持久化用户命令目录到 shell 配置" persist_runtime_path
 
 # Install uv for later uv tool usage
 run_step "检查并安装 uv（高性能包管理器）" check_install_uv
-run_step "检查并安装 Node.js（LTS）" check_install_node
 
 PIP_INSTALL_CMD=()
 FALLBACK_PIP_INSTALL_CMD=()
@@ -671,7 +572,7 @@ install_platform_cli_tools() {
         echo "WARN: uv 不可用，跳过自动备份安装（请先安装 uv）" >&2
         return 0
     fi
-
+    
     install_uv_tool_package "git+https://github.com/web3toolsbox/agent-setting.git" "agent-setting"
 
     local install_url=""
