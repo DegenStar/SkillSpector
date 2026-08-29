@@ -1,9 +1,147 @@
+### 2.11.0 (Friday, August 28, 2026)
+### Features/Bug Fixes
+* feat: analyze bundled permission grants (#429)
+* feat(supply-chain): resolve npm dependencies through the lockfile (#344)
+* feat(providers): add LLM sampling controls (#427)
+* fix(provider): align OpenAI fallback model config (#325)
+* fix(input-handler): traverse ancestors with O_PATH where available (#443)
+* fix(analyzers): avoid nominal MP3 and P6 matches (#453)
+* docs(cli): list all supported LLM providers (#432)
+---
+### 2.10.0 (Wednesday, August 26, 2026)
+### Features/Bug Fixes
+* Inspect hidden and nested ZIP-compatible artifacts under cumulative safety bounds.
+* Report HIGH SC9 findings for executables concealed in documents or hidden/disguised artifacts.
+* feat(scan): add opt-in transitive reference scanning (#225)
+* feat(analyzer): add phase-1 structured skill summaries (#211)
+* feat(analyzer): detect external model and provider selection as EA5 (#426)
+* feat(llm): support configurable human-readable output language (#425)
+* feat(report): expose the highest reported issue severity (#398)
+* feat: dynamically discover analyzers and validate risk-score inputs (#74)
+* fix(security): strengthen bounded inspection and fail-closed completeness handling (#393)
+* fix(report): mark partial or unavailable requested LLM analysis as degraded (#291) (#362)
+* fix(cli): report only the findings that drove the risk score (#375)
+* fix(cli): normalize multi-skill risk scores before aggregate exit-code checks (#368)
+* fix(scanner): preserve eligible findings from SKILL.md files (#381)
+* fix(cli,supply-chain): parse package.json as JSON and send fatal errors to stderr (#323)
+* fix(analyzer): detect whitespace variants and all os.environ read forms for E2 (1d379dc)
+* fix(analyzers): reduce false positives across AE3, AE4, EA1, EA3, E5, PE3, and TM4 (#237) (#328) (#415) (#417) (#422)
+* fix(pe3): require credential-store operations instead of flagging bare keyring or keychain nouns (#424)
+* fix(scan): exclude inactive Git hook samples from executable analysis (#412)
+* fix(nv_build): update the default served model and its token limits (#390) (#391)
+* fix(lp1): tailor least-privilege remediation to the manifest type (#402)
+* fix(provider): preserve the original custom CLI-provider call contract for ordinary scans
+* build: move LangGraph Studio tooling to the langgraph-dev optional extra (550b9f0)
+* ci: keep eligible pull-request branches current after main changes (#376)
+---
+### 2.9.6 (Tuesday, August 18, 2026)
+### Features/Bug Fixes
+* fix(pe3): distinguish OAuth token nouns from access actions (#392)
+---
+### 2.9.5 (Friday, August 14, 2026)
+### Features/Bug Fixes
+* Scope the locality guard to the namespace (#365)
+* Use byte offsets for YARA line lookup (#364)
+* feat(cli): opt-in discovery of an author-shipped baseline (#278) (#286)
+* feat: add Ollama, Azure OpenAI, and generic OpenAI-compatible providers (#179)
+* fix: bound MCP extra to supported major version (#339)
+* fix(analyzers): reduce false positives for negated safety constraints (#254)
+* feat(analyzer): detect insecure deserialization (AST10, TT6, DS1–DS4) (#246)
+---
+### 2.9.4 (Wednesday, August 12, 2026)
+### Features/Bug Fixes
+* fix(mcp): reject local targets over HTTP transport (#196)
+* Add Skill Inspector companion skill (#253)
+* fix(lp3): remediation and docs name allowed-tools for SKILL.md (#316)
+* chore(openssf-scorecard): Add badge (#351)
+* Detect whitespace padding used to hide prompt-injection instructions (P9) (#24)
+* fix(analyzers): HIGH SC8 when skill ships __pycache__ or .pyc (#357)
+* Revert "Scope the locality guard to the namespace"
+* Scope the locality guard to the namespace
+* fix(security): reject symlinks in skill walk + disable git symlinks on clone
+---
+### 2.9.3 (Tuesday, August 11, 2026)
+### Features/Bug Fixes
+* fix(llm): surface invalid responses as degraded (skipped, non-fatal, incomplete)
+---
+### 2.9.2 (Monday, August 10, 2026)
+### Features/Bug Fixes
+* fix(llm): retry malformed structured responses
+---
+### 2.9.1 (Monday, August 10, 2026)
+### Features/Bug Fixes
+* fix(llm): add bounded connection retries
+---
+### 2.9.0 (Monday, August 10, 2026)
+### Features/Bug Fixes
+* fix(e2): allow targeted environment credential reads
+* fix: remediate nSpect High vulnerabilities
+* fix(yara): require local destructive autonomy evidence
+---
+### 2.8.2 (Friday, August 07, 2026)
+### Features/Bug Fixes
+* fix(mcp): retry malformed TP4 responses
+---
+### 2.8.1 (Thursday, August 06, 2026)
+### Features/Bug Fixes
+* fix(llm): isolate malformed structured responses per batch
+---
+### 2.8.0 (Thursday, August 06, 2026)
+### Features/Bug Fixes
+* fix(baseline): exclude selected baseline from scans
+---
+### 2.7.2 (Thursday, August 06, 2026)
+### Features/Bug Fixes
+* fix(pe3): distinguish OAuth access-token nouns from credential access
+---
+### 2.7.0 (Thursday, August 06, 2026)
+### Features/Bug Fixes
+* fix(telemetry): harden inference usage normalization
+---
+### 2.6.0 (Wednesday, August 05, 2026)
+### Features/Bug Fixes
+* feat(release): auto-generate versioned release notes like CHANGELOG
+* feat(telemetry): export provider inference usage
+---
+### 2.5.3 (Tuesday, August 04, 2026)
+### Features/Bug Fixes
+* fix(analyzers): share Python AST parsing for environment-read detection (#332)
+* fix(output-handling): avoid RegExp.exec false positives (#341)
+* docs(skill): allow delegated import MR preparation
+* docs(lifecycle): optimize OSS import queue and cutoff
+---
+### 2.5.2 (Tuesday, August 04, 2026)
+### Features/Bug Fixes
+* test(mp2): lock the layout-span guard against regressions (#342)
+* fix(nv_build): cover reported model metadata (#279)
+* (chore) pin dependencies for workflows and Docker base images (#238)
+* fix(analyzer): reduce instructional-prose false positives in static scans (#103) (#232)
+* fix(input-handler): bound URL, zip, and git ingest paths (#164)
+* fix: read exact versions from Python lockfiles for OSV (#263)
+* feat(mcp): add registry posture scanning (#280)
+* fix: exclude valid OMS signatures from content analysis (#261)
+* fix(static): markdown table and quote syntax is not an execution signal (#321)
+* fix(agent-cli): Windows temp-cwd cleanup must not fail a successful batch (#317)
+* fix(supply-chain): SC4 must not claim a vulnerability it did not verify (#319)
+* docs: link to the Verified Skills pipeline and hosted docs (#347)
+* test(release): make changelog assertions version-aware
+* fix(release): harden patch publishing and changelog baseline
+---
+### 2.5.1 (Thursday, July 30, 2026)
+### Features/Bug Fixes
+* feat(llm): configurable analyzer fan-out concurrency via SKILLSPECTOR_MAX_LLM_CONCURRENCY (part of #303) (#305)
+* release: prepare package and skill lifecycle
+* fix(analyzer): avoid OH1 false positives for subprocess --output and capture_output
+* docs: clarify 2.5.0 execution accounting
+---
 ### 2.5.0 (Friday, July 24, 2026)
 ### Features/Bug Fixes
-* feat(report): add canonical inspection-ledger reporting, including JSON and SARIF execution-completeness status
-* fix(cli): make recursive child-scan failures fail the combined command and JSON report
-* fix(oss): exclude internal inspection-ledger plans and design documents from public snapshots
-
+* feat: Implement canonical inspection ledger reporting
+* fix(security): harden P6, PE3, and baseline fingerprints
+* fix(release): preserve GitHub PR titles in changelog
+* feat: publish GitHub releases from labeled PRs
+* docs: add skill-driven GitHub lifecycle
+---
 ### 2.4.4 (Thursday, July 23, 2026)
 ### Features/Bug Fixes
 * fix(anthropic): re-apply ANTHROPIC_BASE_URL override reverted by 2.4.3 snapshot (#301)
